@@ -17,7 +17,7 @@ func New(elems int) *QuickFinder {
 
 func (q *QuickFinder) Union(pointA, pointB int) error {
 	if len(q.Components) < pointA+1 || len(q.Components) < pointB+1 {
-		return errors.New("could not make union, point is greater than length of initialized finder")
+		return errors.New("could not make union, index is greater than length of initialized finder")
 	}
 
 	var newValue int

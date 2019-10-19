@@ -41,7 +41,7 @@ var _ = Describe("Quickfind", func() {
 
 		It("should error if Union parameter is greater than length of finder", func() {
 			finder := quickfind.New(2)
-			Expect(finder.Union(0, 2)).To(MatchError("could not make union, point is greater than length of initialized finder"))
+			Expect(finder.Union(0, 2)).To(MatchError("could not make union, index is greater than length of initialized finder"))
 		})
 	})
 })
