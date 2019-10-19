@@ -40,20 +40,20 @@ func (q *QuickUnioner) Union(pointA, pointB int) error {
 		treeLengthA = historicalTreeLengthA
 	} else {
 		treeLengthA = currentTreeLengthA
-		q.TreeLengths[q.root(pointA)] = currentTreeLengthA
 	}
 
 	if historicalTreeLengthB > currentTreeLengthB {
 		treeLengthB = historicalTreeLengthB
 	} else {
 		treeLengthB = currentTreeLengthB
-		q.TreeLengths[q.root(pointB)] = currentTreeLengthB
 	}
 
 	if treeLengthA < treeLengthB {
 		q.Components[pointA] = q.Components[q.root(pointB)]
+		q.TreeLengths[q.root(pointA)] = treeLengthA + 1
 	} else {
 		q.Components[pointB] = q.Components[q.root(pointA)]
+		q.TreeLengths[q.root(pointB)] = treeLengthB + 1
 	}
 
 	return nil
@@ -75,7 +75,7 @@ func (q *QuickUnioner) treeLength(index int) int {
 	var treeLength int
 	for q.Components[index] != index {
 		index = q.Components[index]
-		treeLength = treeLength + 1
+		treeLength++
 	}
 
 	return treeLength
