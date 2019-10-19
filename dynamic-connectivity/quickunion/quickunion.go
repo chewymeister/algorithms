@@ -22,7 +22,7 @@ func New(elems int) *QuickUnioner {
 
 func (q *QuickUnioner) Union(pointA, pointB int) error {
 	if len(q.Components) < pointA+1 || len(q.Components) < pointB+1 {
-		return errors.New("could not make union, point is greater than length of initialized unioner")
+		return errors.New("could not make union, index is greater than length of initialized unioner")
 	}
 
 	q.Components[pointA] = q.Components[pointB]
@@ -31,24 +31,13 @@ func (q *QuickUnioner) Union(pointA, pointB int) error {
 }
 
 func (q *QuickUnioner) Connected(pointA, pointB int) bool {
-	var pointAHead = pointA
-	var pointBHead = pointB
+	return q.root(pointA) == q.root(pointB)
+}
 
-	for {
-		valueA := q.Components[pointAHead]
-		if valueA == pointAHead {
-			break
-		}
-		pointAHead = valueA
+func (q *QuickUnioner) root(index int) int {
+	for q.Components[index] != index {
+		index = q.Components[index]
 	}
 
-	for {
-		valueB := q.Components[pointB]
-		if valueB == pointBHead {
-			break
-		}
-		pointBHead = valueB
-	}
-
-	return pointAHead == pointBHead
+	return index
 }

@@ -41,7 +41,7 @@ var _ = Describe("Quickfind", func() {
 
 		It("should error if Union parameter is greater than length of unioner", func() {
 			unioner := quickunion.New(2)
-			Expect(unioner.Union(0, 2)).To(MatchError("could not make union, point is greater than length of initialized unioner"))
+			Expect(unioner.Union(0, 2)).To(MatchError("could not make union, index is greater than length of initialized unioner"))
 		})
 	})
 })
