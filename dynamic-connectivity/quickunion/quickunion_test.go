@@ -17,7 +17,7 @@ var _ = Describe("Quickfind", func() {
 	})
 
 	Context("union", func() {
-		FIt("should connect a single pair of points", func() {
+		It("should connect a single pair of points", func() {
 			Expect(unioner.Union(0, 1)).To(Succeed())
 			Expect(unioner.Connected(0, 1)).To(BeTrue())
 			Expect(unioner.Connected(2, 3)).To(BeFalse())
