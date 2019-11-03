@@ -28,31 +28,14 @@ func (q *QuickUnioner) Union(pointA, pointB int) error {
 		return errors.New("could not make union, index is greater than length of initialized unioner")
 	}
 
-	historicalTreeLengthA := q.TreeLengths[q.root(pointA)]
-	historicalTreeLengthB := q.TreeLengths[q.root(pointB)]
-	currentTreeLengthA := q.treeLength(pointA)
-	currentTreeLengthB := q.treeLength(pointB)
-
-	var treeLengthA int
-	var treeLengthB int
-
-	if historicalTreeLengthA > currentTreeLengthA {
-		treeLengthA = historicalTreeLengthA
-	} else {
-		treeLengthA = currentTreeLengthA
-	}
-
-	if historicalTreeLengthB > currentTreeLengthB {
-		treeLengthB = historicalTreeLengthB
-	} else {
-		treeLengthB = currentTreeLengthB
-	}
+	treeLengthA := q.TreeLengths[q.root(pointA)]
+	treeLengthB := q.TreeLengths[q.root(pointB)]
 
 	if treeLengthA < treeLengthB {
-		q.Components[pointA] = q.Components[q.root(pointB)]
+		q.Components[q.root(pointA)] = q.Components[q.root(pointB)]
 		q.TreeLengths[q.root(pointA)] = treeLengthA + 1
 	} else {
-		q.Components[pointB] = q.Components[q.root(pointA)]
+		q.Components[q.root(pointB)] = q.Components[q.root(pointA)]
 		q.TreeLengths[q.root(pointB)] = treeLengthB + 1
 	}
 
@@ -66,17 +49,8 @@ func (q *QuickUnioner) Connected(pointA, pointB int) bool {
 func (q *QuickUnioner) root(index int) int {
 	for q.Components[index] != index {
 		index = q.Components[index]
+		q.Components[index] = q.Components[q.Components[index]]
 	}
 
 	return index
-}
-
-func (q *QuickUnioner) treeLength(index int) int {
-	var treeLength int
-	for q.Components[index] != index {
-		index = q.Components[index]
-		treeLength++
-	}
-
-	return treeLength
 }
